@@ -1,21 +1,22 @@
 <?php
 /**
  * Plugin Name:       Carte Interactive JCE France
- * Plugin URI:        https://github.com/jce/wp-interactive-map-jce
+ * Plugin URI:        https://github.com/JasonFouasson/jcef-map
  * Description:       Carte interactive de la France (métropole + outre-mer) pour afficher les Jeunes Chambres Économiques Locales par région.
- * Version:           1.1.2
+ * Version:           1.2.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            JCE
  * License:           GPL-2.0-or-later
  * Text Domain:       wp-interactive-map-jce
+ * Update URI:        https://github.com/JasonFouasson/jcef-map
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JCE_MAP_VERSION', '1.1.2' );
+define( 'JCE_MAP_VERSION', '1.2.0' );
 define( 'JCE_MAP_DB_VERSION', '1.1.0' );
 define( 'JCE_MAP_FILE', __FILE__ );
 define( 'JCE_MAP_PATH', plugin_dir_path( __FILE__ ) );
@@ -25,6 +26,7 @@ require_once JCE_MAP_PATH . 'includes/class-post-type.php';
 require_once JCE_MAP_PATH . 'includes/class-rest-api.php';
 require_once JCE_MAP_PATH . 'includes/class-assets.php';
 require_once JCE_MAP_PATH . 'includes/class-shortcode.php';
+require_once JCE_MAP_PATH . 'includes/class-updater.php';
 
 /**
  * Bootstrap the plugin.
@@ -34,6 +36,7 @@ function jce_map_init() {
 	JCE_Map_REST_API::init();
 	JCE_Map_Assets::init();
 	JCE_Map_Shortcode::init();
+	JCE_Map_Updater::init();
 }
 add_action( 'plugins_loaded', 'jce_map_init' );
 
