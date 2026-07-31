@@ -1,0 +1,411 @@
+/* JCE interactive map */
+
+:root {
+  --jce-blue: #1e5a8a;
+  --jce-blue-dark: #0f3d61;
+  --jce-accent: #e85d04;
+  --jce-bg: #f4f7fa;
+  --jce-panel: #ffffff;
+  --jce-text: #1a2332;
+  --jce-muted: #5c6b7a;
+  --jce-border: #d5dde5;
+  --jce-radius: 10px;
+  --jce-shadow: 0 8px 28px rgba(15, 40, 70, 0.12);
+}
+
+.jce-map-app {
+  --jce-map-height: 600px;
+  color: var(--jce-text);
+  font-family: Georgia, "Times New Roman", serif;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.jce-map-app *,
+.jce-map-app *::before,
+.jce-map-app *::after {
+  box-sizing: border-box;
+}
+
+.jce-map-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 340px);
+  gap: 0;
+  min-height: var(--jce-map-height);
+  border: 1px solid var(--jce-border);
+  border-radius: var(--jce-radius);
+  overflow: hidden;
+  background: var(--jce-bg);
+  box-shadow: var(--jce-shadow);
+}
+
+.jce-map-main {
+  position: relative;
+  min-height: var(--jce-map-height);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(30, 90, 138, 0.08), transparent 50%),
+    linear-gradient(160deg, #e8eef4 0%, #f7fafc 55%, #e4edf5 100%);
+}
+
+.jce-map-canvas {
+  width: 100%;
+  height: var(--jce-map-height);
+  z-index: 1;
+}
+
+.jce-map-canvas .leaflet-container {
+  font: inherit;
+  background: transparent;
+}
+
+.jce-region-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #0f3d61;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 6px #fff,
+    1px 1px 0 #fff,
+    -1px -1px 0 #fff;
+  pointer-events: none;
+  white-space: normal;
+  max-width: 110px;
+  line-height: 1.15;
+  padding: 0 !important;
+}
+
+.jce-region-label::before {
+  display: none !important;
+}
+
+.jce-map-insets {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  z-index: 500;
+  pointer-events: none;
+}
+
+.jce-map-inset {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  pointer-events: auto;
+  border: 2px solid var(--jce-blue-dark);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.jce-map-inset:hover,
+.jce-map-inset:focus-within,
+.jce-map-inset.is-active {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+}
+
+.jce-map-inset.is-active {
+  border-color: var(--jce-accent);
+}
+
+.jce-map-inset__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: rgba(15, 61, 97, 0.88);
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: center;
+  padding: 3px 4px;
+  pointer-events: none;
+}
+
+.jce-map-inset__map {
+  width: 100%;
+  height: 100%;
+}
+
+.jce-map-panel {
+  background: var(--jce-panel);
+  border-left: 1px solid var(--jce-border);
+  display: flex;
+  flex-direction: column;
+  max-height: var(--jce-map-height);
+  min-height: var(--jce-map-height);
+}
+
+.jce-map-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--jce-border);
+  background: linear-gradient(180deg, #f8fafc, #eef3f8);
+}
+
+.jce-map-panel__reset {
+  appearance: none;
+  border: 1px solid var(--jce-blue);
+  background: #fff;
+  color: var(--jce-blue-dark);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.jce-map-panel__reset:hover {
+  background: var(--jce-blue);
+  color: #fff;
+}
+
+.jce-map-panel__close {
+  display: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--jce-muted);
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.jce-map-panel__body {
+  overflow: auto;
+  padding: 16px;
+  flex: 1;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.jce-map-panel__title {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+  color: var(--jce-blue-dark);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.jce-map-panel__count {
+  margin: 0 0 16px;
+  color: var(--jce-muted);
+  font-size: 0.875rem;
+}
+
+.jce-map-panel__placeholder,
+.jce-map-panel__empty {
+  margin: 0;
+  color: var(--jce-muted);
+  line-height: 1.5;
+}
+
+.jce-locale-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.jce-locale-card {
+  border: 1px solid var(--jce-border);
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.jce-locale-card.is-focused,
+.jce-locale-card:hover {
+  border-color: var(--jce-blue);
+  box-shadow: 0 2px 10px rgba(30, 90, 138, 0.12);
+}
+
+.jce-locale-card__title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  color: var(--jce-text);
+}
+
+.jce-locale-card__place,
+.jce-locale-card__email {
+  margin: 0 0 8px;
+  font-size: 0.8125rem;
+  color: var(--jce-muted);
+  line-height: 1.4;
+}
+
+.jce-locale-card__email span {
+  font-weight: 600;
+  color: var(--jce-text);
+}
+
+.jce-locale-card__email a {
+  color: var(--jce-blue);
+  text-decoration: none;
+}
+
+.jce-locale-card__email a:hover {
+  text-decoration: underline;
+}
+
+.jce-locale-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.jce-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.jce-btn--primary {
+  background: var(--jce-blue);
+  color: #fff !important;
+}
+
+.jce-btn--primary:hover {
+  background: var(--jce-blue-dark);
+}
+
+.jce-btn--ghost {
+  background: transparent;
+  color: var(--jce-blue-dark) !important;
+  border: 1px solid var(--jce-border);
+}
+
+.jce-btn--ghost:hover {
+  border-color: var(--jce-blue);
+}
+
+.jce-single {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 0 1.25rem 3rem;
+  color: var(--jce-text);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.jce-single__title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  color: var(--jce-blue-dark);
+  margin: 0 0 0.5rem;
+}
+
+.jce-single__meta {
+  color: var(--jce-muted);
+  margin-bottom: 1.5rem;
+}
+
+.jce-single__content {
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.jce-single__card {
+  border: 1px solid var(--jce-border);
+  border-radius: var(--jce-radius);
+  padding: 1.25rem;
+  background: linear-gradient(180deg, #fff, #f7fafc);
+}
+
+.jce-single__card h2 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  color: var(--jce-blue-dark);
+}
+
+.jce-single__dl {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+
+.jce-single__dl dt {
+  font-weight: 600;
+  color: var(--jce-muted);
+}
+
+.jce-single__dl dd {
+  margin: 0;
+}
+
+.jce-single__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .jce-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .jce-map-panel {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 800;
+    max-height: 55%;
+    min-height: 0;
+    border-left: 0;
+    border-top: 1px solid var(--jce-border);
+    border-radius: 16px 16px 0 0;
+    transform: translateY(110%);
+    transition: transform 0.28s ease;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .jce-map-panel.is-open {
+    transform: translateY(0);
+  }
+
+  .jce-map-panel__close {
+    display: block;
+  }
+
+  .jce-map-main {
+    min-height: var(--jce-map-height);
+  }
+
+  .jce-map-inset {
+    width: 96px;
+    height: 96px;
+  }
+
+  .jce-map-inset[data-code="01"] { left: 8px !important; bottom: 8px !important; }
+  .jce-map-inset[data-code="02"] { left: 112px !important; bottom: 8px !important; }
+  .jce-map-inset[data-code="03"] { left: 216px !important; bottom: 8px !important; }
+  .jce-map-inset[data-code="04"] { left: 8px !important; bottom: 112px !important; }
+  .jce-map-inset[data-code="06"] { left: 112px !important; bottom: 112px !important; }
+
+  .jce-single__dl {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "regions": {
+    "11": { "name": "Île-de-France", "type": "metropole" },
+    "24": { "name": "Centre-Val de Loire", "type": "metropole" },
+    "27": { "name": "Bourgogne-Franche-Comté", "type": "metropole" },
+    "28": { "name": "Normandie", "type": "metropole" },
+    "32": { "name": "Hauts-de-France", "type": "metropole" },
+    "44": { "name": "Grand Est", "type": "metropole" },
+    "52": { "name": "Pays de la Loire", "type": "metropole" },
+    "53": { "name": "Bretagne", "type": "metropole" },
+    "75": { "name": "Nouvelle-Aquitaine", "type": "metropole" },
+    "76": { "name": "Occitanie", "type": "metropole" },
+    "84": { "name": "Auvergne-Rhône-Alpes", "type": "metropole" },
+    "93": { "name": "Provence-Alpes-Côte d'Azur", "type": "metropole" },
+    "94": { "name": "Corse", "type": "metropole" },
+    "om": { "name": "Outre-mer", "type": "outre-mer" }
+  },
+  "metropoleBounds": [[41.3, -5.5], [51.2, 9.8]],
+  "metropoleCenter": [46.6, 2.4],
+  "metropoleZoom": 5.5,
+  "insets": [
+    {
+      "code": "01",
+      "regionCode": "om",
+      "label": "Guadeloupe",
+      "center": [16.25, -61.55],
+      "zoom": 8,
+      "position": { "bottom": "12px", "left": "12px" }
+    },
+    {
+      "code": "02",
+      "regionCode": "om",
+      "label": "Martinique",
+      "center": [14.65, -61.0],
+      "zoom": 8.5,
+      "position": { "bottom": "12px", "left": "150px" }
+    },
+    {
+      "code": "03",
+      "regionCode": "om",
+      "label": "Guyane",
+      "center": [4.0, -53.0],
+      "zoom": 5.5,
+      "position": { "bottom": "12px", "left": "288px" }
+    },
+    {
+      "code": "04",
+      "regionCode": "om",
+      "label": "La Réunion",
+      "center": [-21.13, 55.53],
+      "zoom": 8.5,
+      "position": { "bottom": "12px", "left": "426px" }
+    },
+    {
+      "code": "06",
+      "regionCode": "om",
+      "label": "Mayotte",
+      "center": [-12.83, 45.15],
+      "zoom": 9,
+      "position": { "bottom": "12px", "left": "564px" }
+    }
+  ]
+}
